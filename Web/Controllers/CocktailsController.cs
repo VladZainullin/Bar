@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Web.Controllers;
 
+/// <summary>
+///     Контроллер коктейлей
+/// </summary>
 [Route("api/cocktails")]
 public sealed class CocktailsController : BaseController
 {
