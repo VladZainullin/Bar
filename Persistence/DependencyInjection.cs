@@ -27,6 +27,7 @@ public static class DependencyInjection
             })
             .AddScoped<AppDbContext>()
             .AddScoped<IDbSet<Cocktail>, DbSetAdapter<Cocktail>>()
+            .AddScoped<ITransactionContext, AppDbContextAdapter>()
             .AddScoped<IAppDbContext, AppDbContextAdapter>();
 
         return services;

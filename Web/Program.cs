@@ -1,4 +1,5 @@
 using Application;
+using Contracts.Persistence;
 using Persistence;
 using Web;
 
@@ -10,6 +11,14 @@ builder.Services
     .AddWebServices();
 
 var app = builder.Build();
+
+var factory = app.Services.GetRequiredService<IServiceScopeFactory>();
+
+var scope = factory.CreateScope();
+
+var transactionContext = scope.ServiceProvider.GetRequiredService<ITransactionContext>();
+
+await transactionContext.MigrateAsync();
 
 if (app.Environment.IsDevelopment())
 {
@@ -23,4 +32,4 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-app.Run();
+await app.RunAsync();
