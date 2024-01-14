@@ -20,13 +20,15 @@ file sealed class GetCocktailsHandler : IRequestHandler<GetCocktailsRequest, Get
     {
         var queryable = _context.Cocktails.AsNoTracking();
 
+        var searchValue = $"%{request.Dto.SearchValue}%";
+
         if (!ReferenceEquals(request.Dto.SearchValue, default))
         {
             queryable = queryable
                 .Where(c =>
-                    EF.Functions.ILike(request.Dto.SearchValue, c.Title)
-                    &&
-                    EF.Functions.ILike(request.Dto.SearchValue, c.Description));
+                    EF.Functions.ILike(c.Title, searchValue)
+                    ||
+                    EF.Functions.ILike(c.Description, searchValue));
         }
 
         return new GetCocktailsResponseDto

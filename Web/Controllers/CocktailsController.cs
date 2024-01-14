@@ -15,6 +15,7 @@ public sealed class CocktailsController : BaseController
     /// <param name="dto">Данные поиска</param>
     /// <param name="cancellationToken">Токен отмены запроса</param>
     /// <returns>Коллекция коктейлей</returns>
+    [HttpGet]
     public async Task<ActionResult<IEnumerable<GetCocktailsResponseDto>>> GetCocktailsAsync(
         [FromQuery] GetCocktailsRequestDto dto,
         CancellationToken cancellationToken)
