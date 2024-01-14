@@ -2,17 +2,16 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
 WORKDIR /app
 EXPOSE 7210
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
-WORKDIR "Web"
-
-COPY ["Web.csproj", "Web/"]
-RUN dotnet restore "Web.csproj"
-RUN dotnet build "Web.csproj" -c Release -o /app/build
+FROM  mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /build
+COPY . . 
+RUN dotnet restore
+RUN dotnet build
 
 FROM build AS publish
-RUN dotnet publish "Web.csproj" -c Release -o /app/publish
+RUN dotnet publish -c Release -o /app/publish
 
-FROM base AS final
+FROM base as final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Web.dll"]

@@ -3,13 +3,14 @@ version: '3.8'
 services:
   app:
     container_name: bar
-    build:
-      context: .
-      dockerfile: Dockerfile
+#    build:
+#      context: .
+#      dockerfile: Dockerfile
+    image: web
     ports:
-      - "7211:7210"
+      - "7211:80"
     networks:
-      - deploy-guide-dev
+      - postgres
     depends_on:
       - database
   database:
