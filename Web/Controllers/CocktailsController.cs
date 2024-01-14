@@ -1,3 +1,4 @@
+using Contracts.Features.Cocktails.GetCocktail;
 using Contracts.Features.Cocktails.GetCocktails;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,5 +22,19 @@ public sealed class CocktailsController : BaseController
         CancellationToken cancellationToken)
     {
         return Ok(await Mediator.Send(new GetCocktailsRequest(dto), cancellationToken));
+    }
+    
+    /// <summary>
+    ///     Запрос на получение коктейля
+    /// </summary>
+    /// <param name="dto">Данные поиска</param>
+    /// <param name="cancellationToken">Токен отмены запроса</param>
+    /// <returns>Коктейль</returns>
+    [HttpGet("{id:int}")]
+    public async Task<ActionResult<GetCocktailResponseDto>> GetCocktailAsync(
+        [FromRoute] GetCocktailRequestDto dto,
+        CancellationToken cancellationToken)
+    {
+        return Ok(await Mediator.Send(new GetCocktailRequest(dto), cancellationToken));
     }
 }
